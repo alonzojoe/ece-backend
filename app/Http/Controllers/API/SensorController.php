@@ -18,9 +18,8 @@ class SensorController extends Controller
         $angle_of_deflection = $request->input('angle_of_deflection');
         $status = $request->input('status');
 
-
-
         $query = SensorData::query();
+
         if ($buildingName) {
             $query->where('building_name', 'LIKE', "%{$buildingName}%");
         }
@@ -37,8 +36,9 @@ class SensorController extends Controller
             $query->where('status', $status);
         }
 
-        $sensorData = $query->paginate($request->input('per_page', 10));
+        $query->orderBy('id', 'desc');
 
+        $sensorData = $query->paginate($request->input('per_page', 10));
 
         return response()->json([
             'status' => 'success',
@@ -48,6 +48,7 @@ class SensorController extends Controller
             'data' => $sensorData->items(),
         ], 200);
     }
+
 
     public function store(Request $request)
     {
