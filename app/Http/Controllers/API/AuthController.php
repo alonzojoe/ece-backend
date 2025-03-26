@@ -18,6 +18,51 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+    public function index(Request $request)
+    {
+        try {
+
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $gender = $request->input('gender');
+
+
+            $query = User::with('position');
+
+
+            if ($name) {
+                $query->where('name', 'LIKE', "%{$name}%");
+            }
+            if ($email) {
+                $query->where('email', 'LIKE', "%{$email}%");
+            }
+            if ($gender) {
+                $query->where('gender', $gender);
+            }
+
+
+            $query->orderBy('id', 'desc');
+
+
+            $users = $query->paginate(10);
+
+            return response()->json([
+                'status' => 'success',
+                'current_page' => $users->currentPage(),
+                'total_pages' => $users->lastPage(),
+                'total_items' => $users->total(),
+                'data' => $users->items(),
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
     public function register(Request $request)
     {
         try {
