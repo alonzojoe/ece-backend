@@ -20,6 +20,7 @@ Route::group(['prefix' => '/auth'], function () {
     Route::post('/me', [AuthController::class, 'me']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
+    Route::patch('/update/{id}', [AuthController::class, 'update']);
 });
 
 Route::group(['prefix' => '/sensor'], function () {
