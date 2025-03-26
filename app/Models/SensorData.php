@@ -11,9 +11,9 @@ class SensorData extends Model
 
     protected $fillable = [
         'building_name',
-        'maximum_load',
-        'current_load',
+        'load',
         'deflection',
+        'angle_of_deflection',
         'status',
         'user_id',
     ];
