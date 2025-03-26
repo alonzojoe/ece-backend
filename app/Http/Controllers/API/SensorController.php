@@ -13,24 +13,25 @@ class SensorController extends Controller
     public function index(Request $request)
     {
         $buildingName = $request->input('building_name');
-        $maximumLoad = $request->input('maximum_load');
-        $currentLoad = $request->input('current_load');
+        $load = $request->input('load');
         $deflection = $request->input('deflection');
+        $angle_of_deflection = $request->input('angle_of_deflection');
         $status = $request->input('status');
+
 
 
         $query = SensorData::query();
         if ($buildingName) {
             $query->where('building_name', 'LIKE', "%{$buildingName}%");
         }
-        if ($maximumLoad) {
-            $query->where('maximum_load', 'LIKE', "%{$maximumLoad}%");
-        }
-        if ($currentLoad) {
-            $query->where('current_load', 'LIKE', "%{$currentLoad}%");
+        if ($load) {
+            $query->where('load', 'LIKE', "%{$load}%");
         }
         if ($deflection) {
             $query->where('deflection', 'LIKE', "%{$deflection}%");
+        }
+        if ($angle_of_deflection) {
+            $query->where('angle_of_deflection', 'LIKE', "%{$angle_of_deflection}%");
         }
         if (!is_null($status)) {
             $query->where('status', $status);
@@ -55,18 +56,18 @@ class SensorController extends Controller
 
             $request->validate([
                 'building_name' => 'nullable|string',
-                'maximum_load' => 'nullable|string',
-                'current_load' => 'nullable|string',
+                'load' => 'nullable|string',
                 'deflection' => 'nullable|string',
+                'angle_of_deflection' => 'nullable|string',
                 'status' => 'nullable|boolean',
                 'user_id' => 'nullable|integer',
             ]);
 
             SensorData::create([
                 'building_name' => $request->building_name,
-                'maximum_load' => $request->maximum_load,
-                'current_load' => $request->current_load,
+                'load' => $request->load,
                 'deflection' => $request->deflection,
+                'angle_of_deflection' => $request->angle_of_deflection,
                 'status' => 1,
                 'user_id' => $request->user_id,
             ]);
@@ -86,13 +87,22 @@ class SensorController extends Controller
 
         try {
 
+            $request->validate([
+                'building_name' => 'nullable|string',
+                'load' => 'nullable|string',
+                'deflection' => 'nullable|string',
+                'angle_of_deflection' => 'nullable|string',
+                'status' => 'nullable|boolean',
+                'user_id' => 'nullable|integer',
+            ]);
+
             $sensorData = SensorData::findOrFail($id);
 
             $sensorData->update([
                 'building_name' => $request->building_name,
-                'maximum_load' => $request->maximum_load,
-                'current_load' => $request->current_load,
+                'load' => $request->load,
                 'deflection' => $request->deflection,
+                'angle_of_deflection' => $request->angle_of_deflection,
                 'status' => $request->status,
                 'user_id' => $request->user_id,
             ]);
@@ -105,15 +115,6 @@ class SensorController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
-        $request->validate([
-            'building_name' => 'nullable|string',
-            'maximum_load' => 'nullable|string',
-            'current_load' => 'nullable|string',
-            'deflection' => 'nullable|string',
-            'status' => 'nullable|boolean',
-            'user_id' => 'nullable|integer',
-        ]);
     }
 
     public function inactive($id)
