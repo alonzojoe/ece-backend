@@ -17,4 +17,9 @@ class SensorData extends Model
         'status',
         'user_id',
     ];
+
+    public function notification()
+    {
+        return $this->hasOne(Notification::class, 'sensor_data_id');
+    }
 }
