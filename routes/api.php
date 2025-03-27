@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\SensorController;
+use App\Http\Controllers\API\NotificationController;
 
 
 Route::get('/test', function () {
@@ -36,4 +37,12 @@ Route::group(['prefix' => '/position'], function () {
     Route::post('/store', [PositionController::class, 'store']);
     Route::put('/update/{id}', [PositionController::class, 'update']);
     Route::delete('/delete/{id}', [PositionController::class, 'destroy']);
+});
+
+Route::group(['prefix' => '/notif'], function () {
+    Route::get('/', [NotificationController::class, 'index']);
+    Route::post('/store', [NotificationController::class, 'store']);
+    Route::patch('/update/{id}', [NotificationController::class, 'update']);
+    Route::delete('/delete/{id}', [NotificationController::class, 'destroy']);
+    Route::patch('/seen', [NotificationController::class, 'seen']);
 });
