@@ -7,9 +7,18 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\SensorData;
 use App\Events\SensorStored;
+use App\Models\Notification;
+use App\Http\Controllers\API\NotificationController;
 
 class SensorController extends Controller
 {
+    protected $notificationController;
+
+    public function __construct(NotificationController $notificationController)
+    {
+        $this->notificationController = $notificationController;
+    }
+
 
     public function index(Request $request)
     {
@@ -19,7 +28,7 @@ class SensorController extends Controller
         $angle_of_deflection = $request->input('angle_of_deflection');
         $status = $request->input('status');
 
-        $query = SensorData::query();
+        $query = SensorData::with('notification');
 
         if ($buildingName) {
             $query->where('building_name', 'LIKE', "%{$buildingName}%");
@@ -63,6 +72,7 @@ class SensorController extends Controller
                 'angle_of_deflection' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
                 'status' => 'nullable|boolean',
                 'user_id' => 'nullable|integer',
+                'notification' => 'nullable|string'
             ]);
 
 
@@ -76,7 +86,14 @@ class SensorController extends Controller
                 'user_id' => $request->user_id,
             ]);
 
-            broadcast(new SensorStored($sensorData));
+            if ($request->has('notification') && !empty($request->notification)) {
+                Notification::create([
+                    'sensor_data_id' => $sensorData->id,
+                    'state' => $request->notification,
+                ]);
+            }
+
+            // broadcast(new SensorStored($sensorData));
 
             return response()->json(['status' => 'created', 'message' => 'Sensor data saved successfully'], 201);
         } catch (Exception $e) {
@@ -113,7 +130,6 @@ class SensorController extends Controller
                 'user_id' => $request->user_id,
             ]);
 
-            broadcast(new SensorStored($sensorData));
 
             return response()->json(['status' => 'updated', 'message' => 'Sensor data updated successfully'], 200);
         } catch (Exception $e) {

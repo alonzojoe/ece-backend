@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Notification;
 use Exception;
 
-class NotificationController extends Controller
+class
+NotificationController extends Controller
 {
     public function index(Request $request)
     {
@@ -19,12 +20,13 @@ class NotificationController extends Controller
     {
         try {
             $request->validate([
-                'sensor_data_id' => 'required|integer',
+                'sensor_data_id' => 'nullable|integer',
+                'state' => 'nullable|string',
             ]);
 
             Notification::create([
                 'sensor_data_id' => $request->sensor_data_id,
-                'state' => null,
+                'state' => $request->notification,
                 'status' => 1,
             ]);
 
