@@ -58,12 +58,14 @@ class SensorController extends Controller
 
             $request->validate([
                 'building_name' => 'nullable|string',
-                'load' => 'nullable|string',
-                'deflection' => 'nullable|string',
-                'angle_of_deflection' => 'nullable|string',
+                'load' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
+                'deflection' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
+                'angle_of_deflection' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
                 'status' => 'nullable|boolean',
                 'user_id' => 'nullable|integer',
             ]);
+
+
 
             $sensorData = SensorData::create([
                 'building_name' => $request->building_name,
@@ -93,9 +95,9 @@ class SensorController extends Controller
 
             $request->validate([
                 'building_name' => 'nullable|string',
-                'load' => 'nullable|string',
-                'deflection' => 'nullable|string',
-                'angle_of_deflection' => 'nullable|string',
+                'load' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
+                'deflection' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
+                'angle_of_deflection' => ['nullable', 'regex:/^([-+]?[0-9]*\.?[0-9]+|[a-zA-Z\s]+)$/'],
                 'status' => 'nullable|boolean',
                 'user_id' => 'nullable|integer',
             ]);
