@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\SensorData;
+use App\Events\SensorStored;
 
 class SensorController extends Controller
 {
@@ -64,7 +65,7 @@ class SensorController extends Controller
                 'user_id' => 'nullable|integer',
             ]);
 
-            SensorData::create([
+            $sensorData = SensorData::create([
                 'building_name' => $request->building_name,
                 'load' => $request->load,
                 'deflection' => $request->deflection,
@@ -72,6 +73,8 @@ class SensorController extends Controller
                 'status' => 1,
                 'user_id' => $request->user_id,
             ]);
+
+            broadcast(new SensorStored($sensorData));
 
             return response()->json(['status' => 'created', 'message' => 'Sensor data saved successfully'], 201);
         } catch (Exception $e) {
@@ -107,6 +110,8 @@ class SensorController extends Controller
                 'status' => $request->status,
                 'user_id' => $request->user_id,
             ]);
+
+            broadcast(new SensorStored($sensorData));
 
             return response()->json(['status' => 'updated', 'message' => 'Sensor data updated successfully'], 200);
         } catch (Exception $e) {
