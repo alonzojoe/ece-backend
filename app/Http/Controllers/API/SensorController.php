@@ -86,14 +86,19 @@ class SensorController extends Controller
                 'user_id' => $request->user_id,
             ]);
 
-            if ($request->has('notification') && !empty($request->notification)) {
-                Notification::create([
-                    'sensor_data_id' => $sensorData->id,
-                    'state' => $request->notification,
-                ]);
-            }
 
-            // broadcast(new SensorStored($sensorData));
+            // if ($request->has('notification') && !empty($request->notification)) {
+            $notif = Notification::create([
+                'sensor_data_id' => $sensorData->id,
+                'state' => $request->notification,
+            ]);
+            // }
+            $mergedData = array_merge(
+                $sensorData->toArray(),
+                $notif->toArray()
+            );
+
+            broadcast(new SensorStored($mergedData));
 
             return response()->json(['status' => 'created', 'message' => 'Sensor data saved successfully'], 201);
         } catch (Exception $e) {

@@ -16,6 +16,12 @@ NotificationController extends Controller
         return response()->json(['status' => 'success', 'data' => $notifications], 200);
     }
 
+    public function all()
+    {
+        $notifications = Notification::orderBy('id', 'desc')->get();
+        return response()->json(['status' => 'success', 'data' => $notifications], 200);
+    }
+
     public function store(Request $request)
     {
         try {
