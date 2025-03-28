@@ -12,7 +12,19 @@ NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $notifications = Notification::orderBy('id', 'desc')->paginate(10);
+        $notifications = Notification::with('sensorData')->orderBy('id', 'desc')->paginate(10);
+        return response()->json([
+            'status' => 'success',
+            'current_page' => $notifications->currentPage(),
+            'total_pages' => $notifications->lastPage(),
+            'total_items' => $notifications->total(),
+            'data' => $notifications->items(),
+        ], 200);
+    }
+
+    public function all()
+    {
+        $notifications = Notification::with('sensorData')->orderBy('id', 'desc')->get();
         return response()->json(['status' => 'success', 'data' => $notifications], 200);
     }
 
@@ -59,6 +71,7 @@ NotificationController extends Controller
             return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+
 
     public function seen()
     {
