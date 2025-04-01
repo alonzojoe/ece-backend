@@ -34,6 +34,7 @@ Route::group(['prefix' => '/sensor'], function () {
 
 Route::group(['prefix' => '/position'], function () {
     Route::get('/', [PositionController::class, 'index']);
+    Route::get('/all', [PositionController::class, 'all']);
     Route::post('/store', [PositionController::class, 'store']);
     Route::put('/update/{id}', [PositionController::class, 'update']);
     Route::delete('/delete/{id}', [PositionController::class, 'destroy']);
