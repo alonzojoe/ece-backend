@@ -13,10 +13,10 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    // }
 
     public function index(Request $request)
     {
@@ -25,6 +25,8 @@ class AuthController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
             $gender = $request->input('gender');
+            $phone = $request->input('phone');
+            $position_id = $request->input('position_id');
 
 
             $query = User::with('position');
@@ -36,8 +38,14 @@ class AuthController extends Controller
             if ($email) {
                 $query->where('email', 'LIKE', "%{$email}%");
             }
+            if ($email) {
+                $query->where('phone', 'LIKE', "%{$phone}%");
+            }
             if ($gender) {
                 $query->where('gender', $gender);
+            }
+            if ($position_id) {
+                $query->where('position_id', $position_id);
             }
 
 

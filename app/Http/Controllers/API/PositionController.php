@@ -9,21 +9,39 @@ use Exception;
 
 class PositionController extends Controller
 {
+    public function all()
+    {
+        try {
+
+            $positions = Position::where('status', 1)->get();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $positions,
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
     public function index(Request $request)
     {
         $name = $request->input('name');
 
-        $query = Position::query();
+        $query =  Position::withCount('users')->where('status', 1);
 
         if ($name) {
             $query->where('name', 'LIKE', "%{$name}%");
         }
 
 
-        $query->orderBy('id', 'desc');
+        $query->orderBy('id', 'asc');
 
-        $positions = $query->paginate($request->input('per_page', 10));
+        $positions = $query->paginate($request->input('per_page', 6));
 
         return response()->json([
             'status' => 'success',
@@ -92,11 +110,13 @@ class PositionController extends Controller
         try {
             $position = Position::findOrFail($id);
 
-            $position->delete();
+
+            $position->status = 0;
+            $position->save();
 
             return response()->json([
-                'status' => 'deleted',
-                'message' => 'Position deleted successfully',
+                'status' => 'updated',
+                'message' => 'Position status updated successfully',
             ], 200);
         } catch (Exception $e) {
             return response()->json([

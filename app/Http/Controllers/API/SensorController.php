@@ -146,32 +146,27 @@ class SensorController extends Controller
         }
     }
 
-    public function inactive($id)
+    public function inactive(Request $request, $id)
     {
+        $status = $request->status ?? 0;
 
         try {
-
             $sensorData = SensorData::findOrFail($id);
+
             $sensorData->update([
-                'status' => 0
+                'status' => $status
             ]);
 
-            return response()->json(['status' => 'updated', 'message' => 'Sensor data has been inactive'], 200);
-        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'updated',
+                'message' => 'Sensor data has been set to inactive'
+            ], 200);
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'An error occurred',
                 'error' => $e->getMessage()
             ], 500);
         }
-
-        $request->validate([
-            'building_name' => 'nullable|string',
-            'maximum_load' => 'nullable|string',
-            'current_load' => 'nullable|string',
-            'deflection' => 'nullable|string',
-            'status' => 'nullable|boolean',
-            'user_id' => 'nullable|integer',
-        ]);
     }
 }
