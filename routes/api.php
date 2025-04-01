@@ -15,7 +15,7 @@ Route::get('/test', function () {
 
 
 Route::group(['prefix' => '/auth'], function () {
-    Route::get('', [AuthController::class, 'index']);
+    Route::get('/', [AuthController::class, 'index']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -37,7 +37,7 @@ Route::group(['prefix' => '/position'], function () {
     Route::get('/all', [PositionController::class, 'all']);
     Route::post('/store', [PositionController::class, 'store']);
     Route::put('/update/{id}', [PositionController::class, 'update']);
-    Route::delete('/delete/{id}', [PositionController::class, 'destroy']);
+    Route::patch('/delete/{id}', [PositionController::class, 'destroy']);
 });
 
 Route::group(['prefix' => '/notif'], function () {
