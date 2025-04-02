@@ -47,6 +47,10 @@ class AuthController extends Controller
             if ($position_id) {
                 $query->where('position_id', $position_id);
             }
+            if ($phone) {
+                $query->where('phone', $phone);
+            }
+
 
 
             $query->orderBy('id', 'desc');
