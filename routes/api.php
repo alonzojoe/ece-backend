@@ -47,4 +47,5 @@ Route::group(['prefix' => '/notif'], function () {
     Route::post('/store', [NotificationController::class, 'store']);
     Route::patch('/update/{id}', [NotificationController::class, 'update']);
     Route::patch('/seen', [NotificationController::class, 'seen']);
+    Route::patch('/clear', [NotificationController::class, 'clear']);
 });

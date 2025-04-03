@@ -73,4 +73,16 @@ NotificationController extends Controller
             return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+
+
+    public function clear()
+    {
+        try {
+            Notification::query()->update(['active' => 0]);
+
+            return response()->json(['status' => 'updated', 'message' => 'All notifications cleared'], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
 }
