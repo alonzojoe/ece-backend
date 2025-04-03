@@ -23,6 +23,7 @@ Route::group(['prefix' => '/auth'], function () {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::patch('/update/{id}', [AuthController::class, 'update']);
+    Route::patch('/deactivate/{id}', [AuthController::class, 'deactivate']);
 });
 
 Route::group(['prefix' => '/sensor'], function () {
@@ -45,6 +46,6 @@ Route::group(['prefix' => '/notif'], function () {
     Route::get('/all', [NotificationController::class, 'all']);
     Route::post('/store', [NotificationController::class, 'store']);
     Route::patch('/update/{id}', [NotificationController::class, 'update']);
-    Route::delete('/delete/{id}', [NotificationController::class, 'destroy']);
     Route::patch('/seen', [NotificationController::class, 'seen']);
+    Route::patch('/clear', [NotificationController::class, 'clear']);
 });

@@ -12,7 +12,7 @@ NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $notifications = Notification::with('sensorData')->orderBy('id', 'desc')->paginate(10);
+        $notifications = Notification::with('sensorData')->where(['active' => 1])->orderBy('id', 'desc')->paginate(10);
         return response()->json([
             'status' => 'success',
             'current_page' => $notifications->currentPage(),
@@ -24,7 +24,7 @@ NotificationController extends Controller
 
     public function all()
     {
-        $notifications = Notification::with('sensorData')->orderBy('id', 'desc')->get();
+        $notifications = Notification::with('sensorData')->where(['active' => 1])->orderBy('id', 'desc')->get();
         return response()->json(['status' => 'success', 'data' => $notifications], 200);
     }
 
@@ -40,6 +40,7 @@ NotificationController extends Controller
                 'sensor_data_id' => $request->sensor_data_id,
                 'state' => $request->notification,
                 'status' => 1,
+                'active' => 1,
             ]);
 
             return response()->json(['status' => 'created', 'message' => 'Notification created successfully'], 201);
@@ -52,7 +53,7 @@ NotificationController extends Controller
     {
         try {
             $notification = Notification::findOrFail($id);
-            $notification->update(['status' => 0]);
+            $notification->update(['active' => 0]);
 
             return response()->json(['status' => 'updated', 'message' => 'Notification marked as seen'], 200);
         } catch (Exception $e) {
@@ -60,17 +61,6 @@ NotificationController extends Controller
         }
     }
 
-    public function delete($id)
-    {
-        try {
-            $notification = Notification::findOrFail($id);
-            $notification->delete();
-
-            return response()->json(['status' => 'deleted', 'message' => 'Notification deleted successfully'], 200);
-        } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
-        }
-    }
 
 
     public function seen()
@@ -79,6 +69,18 @@ NotificationController extends Controller
             Notification::where('status', 1)->update(['status' => 0]);
 
             return response()->json(['status' => 'updated', 'message' => 'All notifications marked as seen'], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function clear()
+    {
+        try {
+            Notification::query()->update(['active' => 0]);
+
+            return response()->json(['status' => 'updated', 'message' => 'All notifications cleared'], 200);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }

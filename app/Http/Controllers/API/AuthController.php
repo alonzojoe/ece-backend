@@ -47,9 +47,13 @@ class AuthController extends Controller
             if ($position_id) {
                 $query->where('position_id', $position_id);
             }
+            if ($phone) {
+                $query->where('phone', $phone);
+            }
 
 
-            $query->orderBy('id', 'desc');
+
+            $query->where('status', 1)->orderBy('id', 'desc');
 
 
             $users = $query->paginate(10);
@@ -159,8 +163,9 @@ class AuthController extends Controller
             ]);
 
             $credentials = $request->only('email', 'password');
+            $user = User::where('email', $credentials['email'])->where('status', 1)->first();
 
-            if (!$token = Auth::attempt($credentials)) {
+            if (!$user || !$token = Auth::attempt($credentials)) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
 
@@ -262,6 +267,18 @@ class AuthController extends Controller
                 'message' => 'An error occurred',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function deactivate($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update(['status' => 0]);
+
+            return response()->json(['status' => 'updated', 'message' => 'User set as inactive'], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
 }
