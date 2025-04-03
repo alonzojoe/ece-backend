@@ -40,6 +40,7 @@ NotificationController extends Controller
                 'sensor_data_id' => $request->sensor_data_id,
                 'state' => $request->notification,
                 'status' => 1,
+                'active' => 1,
             ]);
 
             return response()->json(['status' => 'created', 'message' => 'Notification created successfully'], 201);
