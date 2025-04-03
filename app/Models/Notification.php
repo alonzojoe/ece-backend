@@ -13,6 +13,7 @@ class Notification extends Model
         'sensor_data_id',
         'state',
         'status',
+        'active',
     ];
 
     public function sensorData()

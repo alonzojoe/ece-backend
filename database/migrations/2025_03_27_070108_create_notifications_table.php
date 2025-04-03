@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sensor_data_id')->nullable();
             $table->string('state')->nullable();
             $table->boolean('status')->default(1);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
