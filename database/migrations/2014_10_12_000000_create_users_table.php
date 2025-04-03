@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('position_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
