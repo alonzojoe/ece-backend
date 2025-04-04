@@ -6,7 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\SensorController;
 use App\Http\Controllers\API\NotificationController;
-
+use App\Http\Controllers\API\EmailController;
 
 Route::get('/test', function () {
     return response()->json(['status' => 'success', 'message' => 'API Endpoint Works!'], 200);
@@ -48,4 +48,5 @@ Route::group(['prefix' => '/notif'], function () {
     Route::patch('/update/{id}', [NotificationController::class, 'update']);
     Route::patch('/seen', [NotificationController::class, 'seen']);
     Route::patch('/clear', [NotificationController::class, 'clear']);
+    Route::post('/send-email', [EmailController::class, 'sendEmail']);
 });
