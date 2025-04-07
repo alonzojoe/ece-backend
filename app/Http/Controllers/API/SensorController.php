@@ -59,6 +59,50 @@ class SensorController extends Controller
         ], 200);
     }
 
+    public function all(Request $request)
+    {
+        $buildingName = $request->input('building_name');
+        $load = $request->input('load');
+        $deflection = $request->input('deflection');
+        $angle_of_deflection = $request->input('angle_of_deflection');
+        $status = $request->input('status');
+        $dateFrom = $request->input('date_from');
+        $dateTo = $request->input('date_to');
+
+        $query = SensorData::with('notification');
+
+        if ($buildingName) {
+            $query->where('building_name', 'LIKE', "%{$buildingName}%");
+        }
+        if ($load) {
+            $query->where('load', 'LIKE', "%{$load}%");
+        }
+        if ($deflection) {
+            $query->where('deflection', 'LIKE', "%{$deflection}%");
+        }
+        if ($angle_of_deflection) {
+            $query->where('angle_of_deflection', 'LIKE', "%{$angle_of_deflection}%");
+        }
+        if (!is_null($status)) {
+            $query->where('status', $status);
+        }
+
+        if ($dateFrom && $dateTo) {
+            $query->whereDate('created_at', '>=', $dateFrom)
+                ->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $query->orderBy('id', 'desc');
+
+        // Fetch all results instead of paginating
+        $sensorData = $query->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $sensorData,
+        ], 200);
+    }
+
 
     public function store(Request $request)
     {

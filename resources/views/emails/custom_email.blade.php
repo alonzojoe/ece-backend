@@ -18,7 +18,7 @@
     <!--[if !mso]><!-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--<![endif]-->
-    <title>{{ $subject }}</title>
+    <title></title>
 
     <style type="text/css">
         @media only screen and (min-width: 570px) {
@@ -107,6 +107,24 @@
         #u_body a {
             color: #0000ee;
             text-decoration: underline;
+        }
+
+        .sensor-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .sensor-table th {
+            font-weight: bold
+        }
+
+        .sensor-table th,
+        .sensor-table td {
+            border: 1px solid #748396 !important;
+            padding: 3px 6px !important;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 12px !important;
         }
 
         @media (max-width: 480px) {
@@ -333,8 +351,8 @@
                                         padding-left: 0px;
                                       " align="left">
                                                                         <img align="left" border="0"
-                                                                            src="app-lgo"
-                                                                            alt="app-logo" title="Image" style="
+                                                                            src="https://i.ibb.co/jvRMJDxC/email-notif.png"
+                                                                            alt="Image" title="Image" style="
                                           outline: none;
                                           text-decoration: none;
                                           -ms-interpolation-mode: bicubic;
@@ -457,6 +475,38 @@
                                   word-break: break-word;
                                   padding: 10px 20px;
                                   font-family: 'Raleway', sans-serif;
+                                  text-align:center;
+                                " align="center">
+                                                            <div class="v-text-align v-line-height" style="
+                                                           font-size: 14px;
+                                                           color: #132f40;
+                                                           line-height: 140%;
+                                                           text-align: center;
+                                                           word-wrap: break-word;
+                                                         ">
+
+                                                                <p style="font-size: 14px; line-height: 140%">
+
+                                                                    <span style="
+                                                               color: #FF1E4E;
+                                                               font-family: 'arial black',
+                                                                 AvenirNext-Heavy, 'avant garde', arial;
+                                                               font-size: 18px;
+                                                               font-weight: 600;
+                                                               line-height: 22.4px;
+                                                               text-align: center !important;
+                                                               width:100%;
+                                                             ">System Alerts</span>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="v-container-padding-padding" style="
+                                  overflow-wrap: break-word;
+                                  word-break: break-word;
+                                  padding: 10px 20px;
+                                  font-family: 'Raleway', sans-serif;
                                 " align="left">
                                                             <div class="v-text-align v-line-height" style="
                                     font-size: 14px;
@@ -466,24 +516,31 @@
                                     word-wrap: break-word;
                                   ">
 
-                                                                <p style="font-size: 14px; line-height: 140%">
-
-                                                                    <span style="
-                                        color: #FF1E4E;
-                                        font-family: 'arial black',
-                                          AvenirNext-Heavy, 'avant garde', arial;
-                                        font-size: 16px;
-                                        line-height: 22.4px;
-                                        text-align: center !important;
-                                      ">App Notification</span>
-                                                                </p>
                                                                 <br>
                                                                 <p style="font-size: 14px; line-height: 140%">
                                                                     <span style="
                                         font-family: Rubik, sans-serif;
                                         font-size: 16px;
                                         line-height: 22.4px;
-                                      ">Dear <strong>Sample Name</strong>, </span>
+                                      ">
+                                      {{-- <strong>System Alerts</strong> --}}
+                                      </span>
+                                                                </p>
+                                                                <p style="font-size: 14px; line-height: 140%">
+                                                                    <span style="
+                                        font-family: Rubik, sans-serif;
+                                        font-size: 16px;
+                                        line-height: 22.4px;
+                                      ">
+                                      {{-- <strong>sentence here</strong>, --}}
+                                                                    </span>
+                                                                </p>
+                                                                <p style="font-size: 14px; line-height: 140%">
+                                                                    <span style="
+                                        font-family: Rubik, sans-serif;
+                                        font-size: 16px;
+                                        line-height: 22.4px;
+                                      ">Dear <span>{{ $recipient['name'] }}, </span>
                                                                 </p>
                                                             </div>
                                                         </td>
@@ -511,19 +568,38 @@
                                                                 <p style="font-size: 14px; line-height: 180%">
                                                                     <span style="
                                         font-family: Raleway, sans-serif;
-                                        font-size: 14px;
+                                        font-size: 16px;
                                         line-height: 25.2px;
-                                      ">This notifies you about the sensor data</span>
+                                        color: #2F4756;
+                                      ">This notifies you about the sensor data:</span>
                                                                 </p>
-                                                                <p style="font-size: 14px; line-height: 180%">
-                                                                    <span style="
-                                        font-family: Raleway, sans-serif;
-                                        font-style: italic;
-                                        font-weight:bold;
-                                        font-size: 14px;
-                                        line-height: 25.2px;
-                                      ">Reached: 75%</span>
-                                                                </p>
+                                                                <br />
+                                                                <div style="overflow-x:auto;">
+                                                                    <table class="sensor-table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                {{-- <th>ID</th> --}}
+                                                                                <th>Building Name</th>
+                                                                                <th>Load</th>
+                                                                                <th>Deflection</th>
+                                                                                <th>Angle of Deflection</th>
+                                                                                <th>Status</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($content as $entry)
+                                                                            <tr>
+                                                                                {{-- <td>{{ $entry['id'] }}</td> --}}
+                                                                                <td>{{ $entry['building_name'] }}</td>
+                                                                                <td>{{ $entry['load'] }}</td>
+                                                                                <td>{{ $entry['deflection'] }}</td>
+                                                                                <td>{{ $entry['angle_of_deflection'] }}</td>
+                                                                                <td>{{ strtoupper($entry['notification']['state']) }}</td>
+                                                                            </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -805,7 +881,8 @@
                                   ">
                                                                 <p style="font-size: 14px; line-height: 150%">
                                                                     <span
-                                                                        style="font-size: 10px; line-height: 15px"><strong>E-Portal</strong></span>
+                                                                        style="font-size: 10px; line-height: 15px"><strong>
+                                                                            System Alerts</strong></span>
                                                                 </p>
                                                                 <p style="font-size: 14px; line-height: 150%">
                                                                     <span style="font-size: 10px; line-height: 15px">
@@ -1050,3 +1127,4 @@
 </body>
 
 </html>
+

@@ -13,21 +13,40 @@ class CustomEmailNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $content;
-    public $subject;
+    // public $content;
+    // public $subject;
 
-    public function __construct($subject, $content)
+    // public function __construct($subject, $content)
+    // {
+    //     $this->subject = $subject;
+    //     $this->content = $content;
+    // }
+
+
+    // public function build()
+    // {
+    //     return $this->from('alertappnoreply@gmail.com')
+    //         ->subject($this->subject)
+    //         ->view('emails.custom_email')
+    //         ->with(['content' => $this->content]);
+    // }
+
+    public $recipient;
+    public $content;
+
+    public function __construct($recipient, $content)
     {
-        $this->subject = $subject;
+        $this->recipient = $recipient;
         $this->content = $content;
     }
 
-
     public function build()
     {
-        return $this->from('alertappnoreply@gmail.com')
-            ->subject($this->subject)
+        return $this->subject('System Alerts')
             ->view('emails.custom_email')
-            ->with(['content' => $this->content]);
+            ->with([
+                'recipient' => $this->recipient,
+                'content' => $this->content
+            ]);
     }
 }

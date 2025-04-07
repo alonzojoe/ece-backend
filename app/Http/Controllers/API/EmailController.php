@@ -12,21 +12,15 @@ class EmailController extends Controller
     public function sendEmail(Request $request)
     {
 
-        $request->validate([
-            'emails' => 'required|array',
-            'emails.*' => 'email',
-            'subject' => 'required|string',
-            'content' => 'required|string',
-        ]);
 
 
-        $emails = $request->input('emails');
-        $subject = $request->input('subject');
-        $content = $request->input('content');
+        $recipients = $request->input('recipients');
+        $data = $request->input('data');
 
+        // return response()->json(['recepients' => $recipients, 'data' => $data], 200);
 
-        foreach ($emails as $email) {
-            Mail::to($email)->send(new CustomEmailNotification($subject, $content));
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient['email'])->send(new CustomEmailNotification($recipient, $data));
         }
 
         return response()->json(['message' => 'Emails sent successfully!'], 200);
