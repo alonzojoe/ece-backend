@@ -42,7 +42,8 @@ class CustomEmailNotification extends Mailable
 
     public function build()
     {
-        return $this->subject('System Alerts')
+        return $this->from('systemalertsnoreply@gmail.com', 'SystemAlerts')
+            ->subject('System Alerts')
             ->view('emails.custom_email')
             ->with([
                 'recipient' => $this->recipient,

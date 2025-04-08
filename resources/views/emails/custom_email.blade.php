@@ -580,9 +580,9 @@
                                                                             <tr>
                                                                                 {{-- <th>ID</th> --}}
                                                                                 <th>Building Name</th>
-                                                                                <th>Load</th>
-                                                                                <th>Deflection</th>
-                                                                                <th>Angle of Deflection</th>
+                                                                                <th>Load (N)</th>
+                                                                                <th>Deflection (mm)</th>
+                                                                                <th>Angle of Deflection (°)</th>
                                                                                 <th>Status</th>
                                                                             </tr>
                                                                         </thead>
@@ -591,9 +591,9 @@
                                                                             <tr>
                                                                                 {{-- <td>{{ $entry['id'] }}</td> --}}
                                                                                 <td>{{ $entry['building_name'] }}</td>
-                                                                                <td>{{ $entry['load'] }}</td>
-                                                                                <td>{{ $entry['deflection'] }}</td>
-                                                                                <td>{{ $entry['angle_of_deflection'] }}</td>
+                                                                                <td>{{ $entry['load'] }} N</td>
+                                                                                <td>{{ $entry['deflection'] }} mm</td>
+                                                                                <td>{{ $entry['angle_of_deflection'] }} °</td>
                                                                                 <td>{{ strtoupper($entry['notification']['state']) }}</td>
                                                                             </tr>
                                                                             @endforeach
