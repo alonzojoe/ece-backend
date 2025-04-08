@@ -302,7 +302,7 @@
                   overflow-wrap: break-word;
                   word-wrap: break-word;
                   word-break: break-word;
-                  background-color: #132F40;
+                  background-color: #fff;
                 ">
                             <div style="
                     border-collapse: collapse;
@@ -351,7 +351,7 @@
                                         padding-left: 0px;
                                       " align="left">
                                                                         <img align="left" border="0"
-                                                                            src="https://i.ibb.co/jvRMJDxC/email-notif.png"
+                                                                            src="https://i.ibb.co/994DKQFv/Your-paragraph-text.png"
                                                                             alt="Image" title="Image" style="
                                           outline: none;
                                           text-decoration: none;
@@ -479,7 +479,7 @@
                                 " align="center">
                                                             <div class="v-text-align v-line-height" style="
                                                            font-size: 14px;
-                                                           color: #132f40;
+                                                           color: #F5581F;
                                                            line-height: 140%;
                                                            text-align: center;
                                                            word-wrap: break-word;
@@ -510,7 +510,7 @@
                                 " align="left">
                                                             <div class="v-text-align v-line-height" style="
                                     font-size: 14px;
-                                    color: #132f40;
+                                    color: #000;
                                     line-height: 140%;
                                     text-align: left;
                                     word-wrap: break-word;
