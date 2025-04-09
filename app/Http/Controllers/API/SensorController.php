@@ -131,7 +131,7 @@ class SensorController extends Controller
                 'deflection' => $request->deflection,
                 'angle_of_deflection' => $request->angle_of_deflection,
                 'status' => 1,
-                'user_id' => $request->user_id,
+                'user_id' => $request->user_id ?? 1,
             ]);
 
 
@@ -210,6 +210,30 @@ class SensorController extends Controller
                 'message' => 'Sensor data has been set to inactive'
             ], 200);
         } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function test()
+    {
+        try {
+
+            $sensorData = [
+                'state' => 'check',
+            ];
+
+            $mergedData = array_merge($sensorData, [
+                'additional_key' => 'extra_value',
+            ]);
+
+            broadcast(new SensorStored($mergedData));
+
+            return response()->json(['status' => 'created', 'message' => 'Websocket is running'], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'An error occurred',

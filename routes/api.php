@@ -32,6 +32,7 @@ Route::group(['prefix' => '/sensor'], function () {
     Route::post('/store', [SensorController::class, 'store']);
     Route::put('/update/{id}', [SensorController::class, 'update']);
     Route::patch('/inactive/{id}', [SensorController::class, 'inactive']);
+    Route::get('/test', [SensorController::class, 'test']);
 });
 
 Route::group(['prefix' => '/position'], function () {
