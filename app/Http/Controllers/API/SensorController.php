@@ -34,14 +34,17 @@ class SensorController extends Controller
             $query->where('building_name', 'LIKE', "%{$buildingName}%");
         }
         if ($load) {
-            $query->where('load', 'LIKE', "%{$load}%");
+            $query->where('load', '=', $load);
         }
+
         if ($deflection) {
-            $query->where('deflection', 'LIKE', "%{$deflection}%");
+            $query->where('deflection', '=', $deflection);
         }
+
         if ($angle_of_deflection) {
-            $query->where('angle_of_deflection', 'LIKE', "%{$angle_of_deflection}%");
+            $query->where('angle_of_deflection', '=', $angle_of_deflection);
         }
+
         if (!is_null($status)) {
             $query->where('status', $status);
         }
@@ -75,13 +78,14 @@ class SensorController extends Controller
             $query->where('building_name', 'LIKE', "%{$buildingName}%");
         }
         if ($load) {
-            $query->where('load', 'LIKE', "%{$load}%");
+            $query->where('load', '=', $load);
         }
         if ($deflection) {
-            $query->where('deflection', 'LIKE', "%{$deflection}%");
+            $query->where('deflection', '=', $deflection);
         }
+
         if ($angle_of_deflection) {
-            $query->where('angle_of_deflection', 'LIKE', "%{$angle_of_deflection}%");
+            $query->where('angle_of_deflection', '=', $angle_of_deflection);
         }
         if (!is_null($status)) {
             $query->where('status', $status);
