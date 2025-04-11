@@ -68,7 +68,7 @@ class SensorController extends Controller
         $load = $request->input('load');
         $deflection = $request->input('deflection');
         $angle_of_deflection = $request->input('angle_of_deflection');
-        $status = $request->input('status');
+        $status = $request->input('status', 1);
         $dateFrom = $request->input('date_from');
         $dateTo = $request->input('date_to');
         $limit = $request->input('limit', 10);
