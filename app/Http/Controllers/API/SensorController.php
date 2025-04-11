@@ -71,6 +71,7 @@ class SensorController extends Controller
         $status = $request->input('status');
         $dateFrom = $request->input('date_from');
         $dateTo = $request->input('date_to');
+        $limit = $request->input('limit', 10);
 
         $query = SensorData::with('notification');
 
@@ -96,10 +97,7 @@ class SensorController extends Controller
                 ->whereDate('created_at', '<=', $dateTo);
         }
 
-        $query->orderBy('id', 'desc');
-
-        // Fetch all results instead of paginating
-        $sensorData = $query->get();
+        $sensorData = $query->limit($limit)->get();
 
         return response()->json([
             'status' => 'success',
