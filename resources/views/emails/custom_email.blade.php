@@ -879,11 +879,11 @@
                                     text-align: left;
                                     word-wrap: break-word;
                                   ">
-                                                                <p style="font-size: 14px; line-height: 150%">
+                                                                {{-- <p style="font-size: 14px; line-height: 150%">
                                                                     <span
                                                                         style="font-size: 10px; line-height: 15px"><strong>
                                                                             System Alerts</strong></span>
-                                                                </p>
+                                                                </p> --}}
                                                                 <p style="font-size: 14px; line-height: 150%">
                                                                     <span style="font-size: 10px; line-height: 15px">
                                                                         &copy; {{ date('Y') }} All rights reserved.
